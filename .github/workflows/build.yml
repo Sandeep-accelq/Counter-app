@@ -35,18 +35,18 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    # ADD SIGNING STEPS HERE (REPLACE THE OLD BUILD STEPS)
+    # FIXED SIGNING STEPS
     - name: Generate Signing Key
       run: |
-        keytool -genkey -v -keystore app/counter-key.keystore -alias counter -keyalg RSA -keysize 2048 -validity 10000 -storepass password123 -keypass password123 -dname "CN=Counter App, OU=Dev, O=MyCompany, L=City, S=State, C=US"
+        keytool -genkey -v -keystore release-key.keystore -alias release -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=Counter App, OU=Dev, O=MyCompany, L=City, S=State, C=US"
 
     - name: Build and Sign APK
       run: |
         ./gradlew assembleRelease \
-          -Pandroid.injected.signing.store.file=counter-key.keystore \
-          -Pandroid.injected.signing.store.password=password123 \
-          -Pandroid.injected.signing.key.alias=counter \
-          -Pandroid.injected.signing.key.password=password123
+          -Pandroid.injected.signing.store.file=${{ github.workspace }}/release-key.keystore \
+          -Pandroid.injected.signing.store.password=android \
+          -Pandroid.injected.signing.key.alias=release \
+          -Pandroid.injected.signing.key.password=android
 
     - name: Upload Signed APK
       uses: actions/upload-artifact@v4
