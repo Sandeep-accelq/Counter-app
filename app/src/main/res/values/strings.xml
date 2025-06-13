@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">HelloSecureApp</string>
+    <string name="app_name">My Counter App</string>
+    <string name="counter_title">Simple Counter</string>
+    <string name="reset">RESET</string>
 </resources>
